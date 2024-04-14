@@ -1,3 +1,6 @@
 *.tfvars*
 *.tfstate*
 *.terraform*
+ami-ubuntu.tf
+launch_template.tf
+*.pem
