@@ -47,5 +47,5 @@ variable "instance_type" {
 
 variable "key_pair" {
   description = "The AWS EC2 instance key pair."
-  default     = ""
+  default     = "Project-Key"
 }
