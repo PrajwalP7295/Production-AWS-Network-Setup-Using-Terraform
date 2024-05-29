@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region
-  profile = var.profile
-  access_key = var.access_key
-  secret_key = var.secret_key
+  region  = var.region            # AWS_Region
+  profile = var.profile           # AWS_IAM_Username
+  access_key = var.access_key     # IAM_User_Access_Key
+  secret_key = var.secret_key     # IAM_User_Secret_Access_Key
 }

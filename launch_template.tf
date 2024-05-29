@@ -1,32 +1,32 @@
-# Launch Template Resource
+# Create a Launch Template Resource for the Auto-Scaling Group instances.
 resource "aws_launch_template" "lt_app" {
-  name = "Python-App-LT"
+  name        = "Python-App-LT"
   description = "Python App Launch Template"
 
-  image_id = lookup(var.AMIs, var.region)       # ami id in specific region
+  image_id      = lookup(var.AMIs, var.region) # ami id in specific region
   instance_type = lookup(var.instance_type, var.env)
-  key_name = var.key_pair                       # key-pair name to used
+  key_name      = var.key_pair # key-pair name to be used to connect to the instances
 
   block_device_mappings {
     device_name = "/dev/sda1"
     ebs {
-      volume_size = 8                           # Size of the EBS volume in GB
-      volume_type = "gp2"                       # Type of EBS volume (General Purpose SSD in this case)
+      volume_size           = 8     # Size of the EBS volume in GB
+      volume_type           = "gp2" # Type of EBS volume (General Purpose SSD in this case)
       delete_on_termination = true
     }
   }
 
   network_interfaces {
-    associate_public_ip_address = false          # Associate a public IP address to the instance
-    security_groups = [ aws_security_group.sg_lt.id ]
+    associate_public_ip_address = false # Associate a public IP address to the instance
+    security_groups             = [aws_security_group.sg_lt.id]
   }
-    
+
   user_data = base64encode(<<EOF
 #!/bin/bash
 # Update the package index
 apt-get update -y
 
-# Install Python3 and Nginx if not already installed
+# Install Python3 if not already installed
 apt-get install -y python3
 
 # Create a directory for the website
@@ -58,7 +58,7 @@ cd /var/www/html
 nohup python3 -m http.server 8000 &
 EOF
   )
-    
+
   tag_specifications {
     resource_type = "instance"
     tags = {

@@ -1,3 +1,5 @@
+# Create an Application Load Balancer to forward traffic from the internet to the Auto-Scaling Group Instances.
+
 resource "aws_lb" "app_alb" {
   name = "Python-App-ALB"
   internal = false
@@ -10,6 +12,8 @@ resource "aws_lb" "app_alb" {
     Environment = "dev"
   }
 }
+
+# Create default listener rule for the incoming traffic on ALB.
 
 resource "aws_lb_listener" "alb_listener" {
   load_balancer_arn = aws_lb.app_alb.arn

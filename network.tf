@@ -1,6 +1,6 @@
 # Create a VPC
 resource "aws_vpc" "prod-network-vpc" {
-  cidr_block           = "10.0.0.0/16"
+  cidr_block           = var.vpc_cidr
   instance_tenancy     = "default"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
@@ -12,8 +12,8 @@ resource "aws_vpc" "prod-network-vpc" {
 # Create 2 Public Subnets 
 resource "aws_subnet" "prod-pub-sub-1" {
   vpc_id                  = aws_vpc.prod-network-vpc.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  cidr_block              = var.pub_sub_1_cidr
+  availability_zone       = var.pub_sub_1_az
   map_public_ip_on_launch = "true"
 
   tags = {
@@ -23,8 +23,8 @@ resource "aws_subnet" "prod-pub-sub-1" {
 
 resource "aws_subnet" "prod-pub-sub-2" {
   vpc_id                  = aws_vpc.prod-network-vpc.id
-  cidr_block              = "10.0.16.0/24"
-  availability_zone       = "us-east-1b"
+  cidr_block              = var.pub_sub_2_cidr
+  availability_zone       = var.pub_sub_2_az
   map_public_ip_on_launch = "true"
 
   tags = {
@@ -35,8 +35,8 @@ resource "aws_subnet" "prod-pub-sub-2" {
 # Create 2 Private Subnets
 resource "aws_subnet" "prod-pvt-sub-1" {
   vpc_id            = aws_vpc.prod-network-vpc.id
-  cidr_block        = "10.0.128.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.pvt_sub_1_cidr
+  availability_zone = var.pvt_sub_1_az
 
   tags = {
     Name = "Prod-Pvt-Sub-1"
@@ -45,8 +45,8 @@ resource "aws_subnet" "prod-pvt-sub-1" {
 
 resource "aws_subnet" "prod-pvt-sub-2" {
   vpc_id            = aws_vpc.prod-network-vpc.id
-  cidr_block        = "10.0.144.0/24"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.pvt_sub_2_cidr
+  availability_zone = var.pvt_sub_2_az
 
   tags = {
     Name = "Prod-Pvt-Sub-2"
@@ -88,7 +88,7 @@ resource "aws_route_table_association" "rtba-igw-2" {
 }
 
 
-# Create 2 Elastic IPs (EIP) for NAT Gateways
+# Create 2 Elastic IPs (EIPs) for NAT Gateways
 resource "aws_eip" "nat-eip-1" {
   domain = "vpc"
 
@@ -105,7 +105,7 @@ resource "aws_eip" "nat-eip-2" {
   }
 }
 
-# Create 2 NAT Gateways
+# Create 2 NAT Gateways; 1 in each Public subnet
 resource "aws_nat_gateway" "pub-nat-1" {
   allocation_id = aws_eip.nat-eip-1.id
   subnet_id     = aws_subnet.prod-pub-sub-1.id
@@ -139,6 +139,8 @@ resource "aws_route_table" "rtb-nat-1" {
     Name = "Rtb-NAT-1"
   }
 }
+
+# Create a Route Table for Private Subnet 2 to NAT Gateway-2
 
 resource "aws_route_table" "rtb-nat-2" {
   vpc_id = aws_vpc.prod-network-vpc.id

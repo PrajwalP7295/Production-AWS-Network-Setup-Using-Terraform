@@ -1,4 +1,4 @@
-# Create a Bastion EC2 host or Jump Server 
+# Create a Bastion EC2 host or Jump Server to connect to the Auto-Scaling Group instances where our app is running. These instances are deployed in private subnets, so they don't have public IPs to directly connect to them.
 
 resource "aws_instance" "bastion" {
   ami                         = lookup(var.AMIs, var.region)

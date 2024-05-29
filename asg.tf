@@ -1,3 +1,5 @@
+# Create an Auto-Scaling Group to create instances that will scale based on traffic.
+
 resource "aws_autoscaling_group" "asg_app" {
   name               = "Python-App-ASG"
 

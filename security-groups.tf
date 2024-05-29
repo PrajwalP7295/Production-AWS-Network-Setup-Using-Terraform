@@ -1,4 +1,4 @@
-# Create Security Group for SSH into bastion EC2
+# Create Security Group for allowing SSH into bastion EC2.
 resource "aws_security_group" "sg_bastion" {
   name        = "Bastion-SSH"
   description = "Allow TLS (SSH) inbound traffic and all outbound traffic to Bastion Host."
@@ -9,7 +9,7 @@ resource "aws_security_group" "sg_bastion" {
   }
 }
 
-# Create Ingress(inbound) rule for SSH into bastion host - IPv4,6
+# Create Ingress(inbound) rule for SSH into bastion host - IPv4
 resource "aws_vpc_security_group_ingress_rule" "ssh_bastion" {
   security_group_id = aws_security_group.sg_bastion.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -18,7 +18,7 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_bastion" {
   to_port           = 22
 }
 
-# Create Egress(outbound) rule for bastion host - IPv4,6
+# Create Egress(outbound) rule for bastion host - IPv4
 resource "aws_vpc_security_group_egress_rule" "all_traffic_bastion_ipv4" {
   security_group_id = aws_security_group.sg_bastion.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -37,7 +37,7 @@ resource "aws_security_group" "sg_lt" {
   }
 }
 
-# Create Ingress(inbound) rule for traffic from ALB
+# Create Ingress(inbound) rule for HTTP traffic from ALB
 
 resource "aws_security_group_rule" "allow_from_alb" {
   type                     = "ingress"
@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "allow_from_alb" {
   to_port                  = 80
 }
 
-# Create Ingress(inbound) rule for HTTP - 80
+# Create Ingress(inbound) rule for SSH from Bastion Host - 22
 
 resource "aws_security_group_rule" "ssh_from_bastion" {
   type                     = "ingress"
@@ -70,7 +70,7 @@ resource "aws_security_group_rule" "app_ipv4" {
   to_port                  = 8000
 }
 
-# Create Egress(outbound) rule for all traffic
+# Create Egress(outbound) rule for all traffic from ASG instances
 resource "aws_vpc_security_group_egress_rule" "all_traffic_app_ipv4" {
   security_group_id = aws_security_group.sg_lt.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -88,7 +88,7 @@ resource "aws_security_group" "sg_alb" {
   }
 }
 
-# Create Ingress(inbound) rule for ALB
+# Create Ingress(inbound) rule for incoming traffic from internet to ALB
 resource "aws_vpc_security_group_ingress_rule" "http_alb_ipv4" {
   security_group_id = aws_security_group.sg_alb.id
   cidr_ipv4         = "0.0.0.0/0"
@@ -97,7 +97,7 @@ resource "aws_vpc_security_group_ingress_rule" "http_alb_ipv4" {
   to_port           = 80
 }
 
-# Create Egress(outbound) rule for ALB
+# Create Egress(outbound) rule for ALB to Internet
 resource "aws_vpc_security_group_egress_rule" "all_traffic_alb_ipv4" {
   security_group_id = aws_security_group.sg_alb.id
   cidr_ipv4         = "0.0.0.0/0"
