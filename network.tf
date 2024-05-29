@@ -5,7 +5,7 @@ resource "aws_vpc" "prod-network-vpc" {
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   tags = {
-    Name = "Prod-network-vpc"
+    Name = "Prod-Network-VPC"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "prod-pub-sub-1" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "Prod-pub-sub-1"
+    Name = "Prod-Pub-Sub-1"
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_subnet" "prod-pub-sub-2" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "Prod-pub-sub-2"
+    Name = "Prod-Pub-Sub-2"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_subnet" "prod-pvt-sub-1" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "Prod-pvt-sub-1"
+    Name = "Prod-Pvt-Sub-1"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_subnet" "prod-pvt-sub-2" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "Prod-pvt-sub-2"
+    Name = "Prod-Pvt-Sub-2"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_internet_gateway" "prod-network-igw" {
   vpc_id = aws_vpc.prod-network-vpc.id
 
   tags = {
-    Name = "Prod-network-igw"
+    Name = "Prod-Network-IGW"
   }
 }
 
@@ -72,7 +72,7 @@ resource "aws_route_table" "rtb-igw" {
   }
 
   tags = {
-    Name = "Rtb-igw"
+    Name = "Rtb-IGW"
   }
 }
 
@@ -93,7 +93,7 @@ resource "aws_eip" "nat-eip-1" {
   domain = "vpc"
 
   tags = {
-    Name = "Nat-Eip-1"
+    Name = "NAT-EIP-1"
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_eip" "nat-eip-2" {
   domain = "vpc"
 
   tags = {
-    Name = "Nat-Eip-2"
+    Name = "NAT-EIP-2"
   }
 }
 
@@ -136,7 +136,7 @@ resource "aws_route_table" "rtb-nat-1" {
   }
 
   tags = {
-    Name = "Rtb-Nat-1"
+    Name = "Rtb-NAT-1"
   }
 }
 
@@ -149,7 +149,7 @@ resource "aws_route_table" "rtb-nat-2" {
   }
 
   tags = {
-    Name = "Rtb-Nat-2"
+    Name = "Rtb-NAT-2"
   }
 }
 

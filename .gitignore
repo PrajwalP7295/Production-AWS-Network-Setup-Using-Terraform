@@ -3,3 +3,4 @@
 *.terraform*
 ami-ubuntu.tf
 *.pem
+key-pair.tf
