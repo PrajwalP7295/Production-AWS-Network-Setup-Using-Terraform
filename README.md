@@ -79,15 +79,16 @@ nohup python3 -m http.server 8000 &
 
 ## Steps to set up the Infrastructure
 
-- Step 1 : 
-Install terraform on the machine you are using (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
+- Step 1 : Install terraform on the machine you are using (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
 
-- Step 2 :
-Clone the repository
-```git clone https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform.git```
+- Step 2 : Clone the repository using :-
+```
+git clone https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform.git
+```
 
-- Step 3 :
-Open terminal in the project directory i.e. __"Production-AWS-Network-Setup-Using-Terraform"__ and the below commands :-
+- Step 3 : Change the credential values (Region, Profile, Access Key, Secret Access Key) in [provider.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/provider.tf) with your own AWS IAM user credentials. You can also change the default values for all the variables in the [variables.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/variables.tf).
+
+- Step 4 : Open terminal in the project directory i.e. __"Production-AWS-Network-Setup-Using-Terraform"__ and the below commands :-
 ```
 terraform init
 
@@ -98,8 +99,7 @@ terraform plan              # To check which resources are being created and the
 terraform apply             # Create resources
 ```
 
-- Step 4 :
-To delete the above created set of resources, run the following command :-
+- Step 5 : To delete the above created set of resources, run the following command :-
 ```
 terraform destroy           # Delete all the resources created using above commands (Does not delete resources created through AWS console)
 ```
