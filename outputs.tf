@@ -42,21 +42,13 @@ output "asg_name" {
   value = aws_autoscaling_group.asg_app.name
 }
 
-# Target Group's ID and Name 
-
-output "tg_id" {
-  value = aws_lb_target_group.tg_app.id
-}
+# Target Group's Name 
 
 output "tg_name" {
   value = aws_lb_target_group.tg_app.name
 }
 
-# Application Load Balancer's ID and Name 
-
-output "lb_id" {
-  value = aws_lb.app_alb.id
-}
+# Application Load Balancer's Name 
 
 output "lb_name" {
   value = aws_lb.app_alb.name
