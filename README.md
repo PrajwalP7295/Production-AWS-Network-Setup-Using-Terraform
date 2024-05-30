@@ -25,11 +25,17 @@ In this project, I have created a production grade highly available AWS network 
 
 > The [network.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/network.tf) file contains the code to create VPC, IGW, Subnets, EIPs, NAT, RT.
 
+## Infrastructure Diagram
+
+    <div align="center">
+      <img src="./images/Prod_network_setup.png" alt="infra_img" width="100%" height="100%">
+    </div>
+
 ## Summary of the Infrastructure
 
 - After deploying the network infrastructure in AWS, I created a Bastion Host in one of the public subnets to connect to the instances running my project web server.
 - Created a launch template which is used by auto-scaling groups to provision or destroy instances (scale in or scale out) based on the resource usage specified.
-- In this launch template, I made use of __"User Data"__ to set up the instances during boot. It is as follows:
+- In this launch template, I made use of __"User Data"__ attribute to set up the instances during boot. It is as follows:
 ```
 #!/bin/bash
 # Update the package index
@@ -70,3 +76,6 @@ nohup python3 -m http.server 8000 &
 - Then, created a target group which will register the auto-scaling group instances as the targets for the application load balancer traffic.
 - Created an application load balancer in public subnets with a default action listener rule to forward traffic received on port 80 to the target group attached to it. 
 - Finally, I created security groups for bastion host, auto-scaling group instances, application load balancer to secure them and only allow specific traffic. 
+
+## Final Output
+
