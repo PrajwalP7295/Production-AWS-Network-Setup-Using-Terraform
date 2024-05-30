@@ -77,5 +77,32 @@ nohup python3 -m http.server 8000 &
 - Created an application load balancer in public subnets with a default action listener rule to forward traffic received on port 80 to the target group attached to it. 
 - Finally, I created security groups for bastion host, auto-scaling group instances, application load balancer to secure them and only allow specific traffic. 
 
+## Steps to set up the Infrastructure
+
+- Step 1 : 
+Install terraform on the machine you are using (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
+
+- Step 2 :
+Clone the repository
+```git clone https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform.git```
+
+- Step 3 :
+Open terminal in the project directory i.e. __"Production-AWS-Network-Setup-Using-Terraform"__ and the below commands :-
+```
+terraform init
+
+terraform validate
+
+terraform plan              # To check which resources are being created and their properties
+
+terraform apply             # Create resources
+```
+
+- Step 4 :
+To delete the above created set of resources, run the following command :-
+```
+terraform destroy           # Delete all the resources created using above commands (Does not delete resources created through AWS console)
+```
+
 ## Final Output
 
