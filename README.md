@@ -1,12 +1,12 @@
 # AWS Production Grade Network Project
 
-In this project, I have created a production grade highly available AWS network consisting of:
+In this project, I have created a production grade highly available AWS network consisting of the following components:
 - 1 VPC (Virtual Private Cloud)
 - 1 IGW (Internet Gateway)
 - 4 Subnets 
     - 2 Public
     - 2 Private
-- 2 Elastic IPs (EIPs) - for both NAT Gateways 
+- 2 Elastic IPs (EIPs) - Assigned to both NAT Gateways 
 - 2 NAT (Network Address Translation) Gateways - 1 in each Public Subnet
 - 3 Route Tables (RT)
     - Public Subnets' traffic to Internet Gateway
@@ -14,16 +14,15 @@ In this project, I have created a production grade highly available AWS network 
     - Private Subnet 2 traffic to NAT Gateway 2 
 - 1 [Bastion EC2 Host](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/bastion-ec2.tf)
 - 3 [Security Groups](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/security-groups.tf) (SG)
-    - Allowing SSH traffic from anywhere to Bastion Host
-    - Allowing traffic from Bastion Host (22), Application Load Balancer (ALB) (80, 8000) to the instances in Auto-Scaling Group 
-    - Allowing all traffic on port 80 from internet to the ALB
+    - Allow SSH traffic from anywhere to the Bastion Host
+    - Allow traffic from the Bastion Host (port 22) and Application Load Balancer (ALB) (ports 80, 8000) to instances in the Auto-Scaling Group 
+    - Allow all traffic on port 80 from the internet to the ALB
 - 1 [Launch Template](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/launch_template.tf) (LT)
 - 1 [Auto-Scaling Group](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/asg.tf) (ASG)
-    - 2 Instances (Min.)
 - 1 [Target Group](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/target-group.tf) (TG)
 - 1 [Application Load Balancer](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/alb.tf) (ALB)
 
-> The [network.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/network.tf) file contains the code to create VPC, IGW, Subnets, EIPs, NAT, RT.
+> The [network.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/network.tf) file contains the code to create the VPC, IGW, Subnets, EIPs, NAT Gateways and Route Tables.
 
 ## Infrastructure Diagram
 
@@ -33,9 +32,9 @@ In this project, I have created a production grade highly available AWS network 
 
 ## Summary of the Infrastructure
 
-- After deploying the network infrastructure in AWS, I created a Bastion Host in one of the public subnets to connect to the instances running my project web server.
-- Created a launch template which is used by auto-scaling groups to provision or destroy instances (scale in or scale out) based on the resource usage specified.
-- In this launch template, I made use of __"User Data"__ attribute to set up the instances during boot. It is as follows:
+- After deploying the network infrastructure in AWS, I created a Bastion Host in one of the public subnets to connect to the instances running the project web server.
+- I created a launch template used by the auto-scaling groups to provision or destroy instances (scale in or scale out) based on specified resource usage.
+- In this launch template, I utilized the __"User Data"__ attribute to set up the instances during boot. It is as follows:
 ```
 #!/bin/bash
 # Update the package index
@@ -72,14 +71,14 @@ cd /var/www/html
 # Run the Python HTTP server on port 8000 as a background process
 nohup python3 -m http.server 8000 &
 ```
-- After this, I created an auto-scaling group that makes use of the above launch template and mentioned the desired (2), minimum (1) and maximum (3) instance capacity.
-- Then, created a target group which will register the auto-scaling group instances as the targets for the application load balancer traffic.
-- Created an application load balancer in public subnets with a default action listener rule to forward traffic received on port 80 to the target group attached to it. 
-- Finally, I created security groups for bastion host, auto-scaling group instances, application load balancer to secure them and only allow specific traffic. 
+- Subsequently, I created an auto-scaling group that uses the above launch template specifying the desired capacity (2 instances), minimum capacity (1 instance), and maximum capacity (3 instances).
+- I then created a target group that registers the auto-scaling group instances as targets for the application load balancer traffic.
+- Then, I Created an application load balancer in the public subnets with a default action listener rule to forward traffic received on port 80 to the attached target group. 
+- Finally, I created security groups for the bastion host, auto-scaling group instances, application load balancer to secure them and allow only specific traffic. 
 
 ## Steps to set up the Infrastructure
 
-- Step 1 : Install terraform on the machine you are using (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
+- Step 1 : Install terraform on your machine (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
 
 - Step 2 : Clone the repository using :-
 ```
