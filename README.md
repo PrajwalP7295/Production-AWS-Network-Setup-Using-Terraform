@@ -105,10 +105,10 @@ terraform destroy           # Delete all the resources created using above comma
 
 ## Final Output
 
-- Step-by-step method to create and destroy resources :
-<video width="320" height="240" controls>
+- Step-by-step method to create and destroy resources : [Watch this video.](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/images/Prod_Network_AWS.mp4)
+<!-- <video width="320" height="240" controls>
   <source src="./images/Prod_Network_AWS.mp4" type="video/mp4">
-</video>
+</video> -->
 
 - The output obtained by accessing the ALB DNS on the browser : 
 <div align="center">
