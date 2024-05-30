@@ -27,9 +27,9 @@ In this project, I have created a production grade highly available AWS network 
 
 ## Infrastructure Diagram
 
-    <div align="center">
-      <img src="./images/Prod_network_setup.png" alt="infra_img" width="100%" height="100%">
-    </div>
+<div align="center">
+    <img src="./images/Prod_network_setup.png" alt="infra_img" width="100%" height="100%">
+</div>
 
 ## Summary of the Infrastructure
 
