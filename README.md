@@ -1,14 +1,14 @@
 # AWS Production Grade Network Project
 
-In this project, I have created a production grade highly available AWS network consisting of the following components:
+In this project, I have created a production grade highly-available AWS network consisting of the following components:
 
 - 1 VPC (Virtual Private Cloud)
 - 1 IGW (Internet Gateway)
 - 4 Subnets
   - 2 Public
   - 2 Private
-- 2 Elastic IPs (EIPs) - Assigned to both NAT Gateways
 - 2 NAT (Network Address Translation) Gateways - 1 in each Public Subnet
+- 2 Elastic IPs (EIPs) - Assigned to both NAT Gateways
 - 3 Route Tables (RT)
   - Public Subnets' traffic to Internet Gateway
   - Private Subnet 1 traffic to NAT Gateway 1
@@ -34,7 +34,7 @@ In this project, I have created a production grade highly available AWS network 
 ## Summary of the Infrastructure
 
 - After deploying the network infrastructure in AWS, I created a Bastion Host in one of the public subnets to connect to the instances running the project web server.
-- I created a launch template used by the auto-scaling groups to provision or destroy instances (scale in or scale out) based on specified resource usage.
+- I created a launch template used by the auto-scaling groups to provision or destroy instances (scale in or scale out) based on required resource usage.
 - In this launch template, I utilized the **"User Data"** attribute to set up the instances during boot. It is as follows:
 
 ```
@@ -91,7 +91,7 @@ git clone https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Ter
 
 - Step 3 : Change the **credential** values (Region, Profile, Access Key, Secret Access Key) in [provider.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/provider.tf) with your own AWS IAM user credentials. You can also change the default values for all the variables in the [variables.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/variables.tf).
 
-- Step 4 : Open **terminal** in the project directory i.e. **"Production-AWS-Network-Setup-Using-Terraform"** and the below commands :-
+- Step 4 : Open **terminal** in the project directory i.e. **"Production-AWS-Network-Setup-Using-Terraform"** and run the below commands :-
 
 ```
 terraform init
@@ -111,7 +111,7 @@ terraform destroy           # Delete all the resources created using above comma
 
 ## Final Output
 
-- Step-by-step method to create and destroy resources : [Watch this video.](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/images/Prod_Network_AWS.mp4)
+- Step-by-step method to create and destroy resources : [Watch this video](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/images/Prod_Network_AWS.mp4).
 <!-- <video width="320" height="240" controls>
   <source src="./images/Prod_Network_AWS.mp4" type="video/mp4">
 </video> -->
