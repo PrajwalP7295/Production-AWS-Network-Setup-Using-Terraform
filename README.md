@@ -13,22 +13,22 @@ In this project, I have created a production grade highly-available AWS network 
   - Public Subnets' traffic to Internet Gateway
   - Private Subnet 1 traffic to NAT Gateway 1
   - Private Subnet 2 traffic to NAT Gateway 2
-- 1 [Bastion EC2 Host](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/bastion-ec2.tf)
-- 3 [Security Groups](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/security-groups.tf) (SG)
+- 1 [Bastion EC2 Host](bastion-ec2.tf)
+- 3 [Security Groups](security-groups.tf) (SG)
   - Allow SSH traffic from anywhere to the Bastion Host
   - Allow traffic from the Bastion Host (port 22) and Application Load Balancer (ALB) (ports 80, 8000) to instances in the Auto-Scaling Group
   - Allow all traffic on port 80 from the internet to the ALB
-- 1 [Launch Template](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/launch_template.tf) (LT)
-- 1 [Auto-Scaling Group](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/asg.tf) (ASG)
-- 1 [Target Group](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/target-group.tf) (TG)
-- 1 [Application Load Balancer](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/alb.tf) (ALB)
+- 1 [Launch Template](launch_template.tf) (LT)
+- 1 [Auto-Scaling Group](asg.tf) (ASG)
+- 1 [Target Group](target-group.tf) (TG)
+- 1 [Application Load Balancer](alb.tf) (ALB)
 
-> The [network.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/network.tf) file contains the code to create the VPC, IGW, Subnets, EIPs, NAT Gateways and Route Tables.
+> The [network.tf](network.tf) file contains the code to create the VPC, IGW, Subnets, EIPs, NAT Gateways and Route Tables.
 
 ## Infrastructure Diagram
 
 <div align="center">
-    <img src="./images/Prod_network_setup.png" alt="infra_img" width="100%" height="100%">
+    <img src="./media/Prod_network_setup.png" alt="infra_img" width="100%" height="100%">
 </div>
 
 ## Summary of the Infrastructure
@@ -81,17 +81,23 @@ nohup python3 -m http.server 8000 &
 
 ## Steps to set up the Infrastructure
 
-- Step 1 : **Install** terraform on your machine (Windows, MacOS, Linux) through the official [Terraform Installation](https://developer.hashicorp.com/terraform/install) page.
+#### Step 1 : **Install** [terraform](https://developer.hashicorp.com/terraform/install) 
 
-- Step 2 : **Clone** the repository using :-
+#### Step 2 : **Clone** the repository
 
 ```
 git clone https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform.git
 ```
 
-- Step 3 : Change the **credential** values (Region, Profile, Access Key, Secret Access Key) in [provider.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/provider.tf) with your own AWS IAM user credentials. You can also change the default values for all the variables in the [variables.tf](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/variables.tf).
+#### Step 3 : Change the **credential** values 
 
-- Step 4 : Open **terminal** in the project directory i.e. **"Production-AWS-Network-Setup-Using-Terraform"** and run the below commands :-
+You need to change the values of `Region`, `Profile`, `Access Key` and `Secret Access Key` in [provider.tf](provider.tf) with your own AWS IAM user credentials. 
+
+You can also change the default values for all the variables in the [variables.tf](variables.tf).
+
+#### Step 4 : Deploy the infrastructure
+
+Open **terminal** in the project directory and run the below commands :-
 
 ```
 terraform init
@@ -103,7 +109,7 @@ terraform plan              # To check which resources are being created and the
 terraform apply             # Create resources
 ```
 
-- Step 5 : To **delete** the above created set of resources, run the following command :-
+#### Step 5 : To **delete** the above created set of resources, run the following command :-
 
 ```
 terraform destroy           # Delete all the resources created using above commands (Does not delete resources created through AWS console)
@@ -111,14 +117,14 @@ terraform destroy           # Delete all the resources created using above comma
 
 ## Final Output
 
-- Step-by-step method to create and destroy resources : [Watch this video](https://github.com/PrajwalP7295/Production-AWS-Network-Setup-Using-Terraform/blob/main/images/Prod_Network_AWS.mp4).
+- Step-by-step method to create and destroy resources : [Watch this video](media/Prod_Network_AWS.mp4).
 <!-- <video width="320" height="240" controls>
   <source src="./images/Prod_Network_AWS.mp4" type="video/mp4">
 </video> -->
 
 - The output obtained by accessing the ALB DNS on the browser :
 <div align="center">
-    <img src="./images/Output.png" alt="infra_img" width="100%" height="100%">
+    <img src="./media/Output.png" alt="infra_img" width="100%" height="100%">
 </div>
 
 ## Reference
